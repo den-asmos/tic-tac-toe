@@ -1,0 +1,48 @@
+.table {
+	width: 400px;
+	height: 400px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	border: 1px solid black;
+}
+
+.element {
+	flex-grow: 1;
+	width: 33.3%;
+	height: 33.3%;
+	border: 1px solid black;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2rem;
+}
+
+.zero {
+	background: url('./assets/ellipse-outline.svg');
+}
+
+.cross {
+	background: url('./assets/close-outline.svg');
+}
+
+.zeroImg {
+	display: inline-block;
+	margin-bottom: -1rem;
+	width: 5rem;
+	height: 5rem;
+	background: url('./assets/ellipse-outline.svg');
+}
+
+.crossImg {
+	display: inline-block;
+	margin-bottom: -1rem;
+	width: 5rem;
+	height: 5rem;
+	background: url('./assets/close-outline.svg');
+}
+
+h1 {
+	margin: 20px;
+}

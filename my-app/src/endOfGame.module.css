@@ -1,0 +1,30 @@
+.btn {
+	margin: 10px;
+	padding: 15px;
+	border-radius: 20px;
+	background: #61dafb;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+	transition: transform .3s ease;
+}
+
+.btn:hover {
+	transform: scale(1.1);
+}
+
+.zeroImg {
+	display: inline-block;
+	margin-bottom: -1rem;
+	width: 5rem;
+	height: 5rem;
+	background: url('./assets/ellipse-outline.svg');
+}
+
+.crossImg {
+	display: inline-block;
+	margin-bottom: -1rem;
+	width: 5rem;
+	height: 5rem;
+	background: url('./assets/close-outline.svg');
+}
