@@ -1,12 +1,9 @@
 import styles from './appLayout.module.css';
 import PropTypes from 'prop-types';
 import { store } from './redux/store';
-import { useState } from 'react';
 import { updateField } from './redux/actions';
 
-export const AppLayout = ({ checkTheWinner, checkTheField, onReRender }) => {
-	const [state, setState] = useState(store.getState());
-
+export const AppLayout = ({ state, checkTheWinner, checkTheField }) => {
 	const chooseIcon = () => {
 		return state.move === 'cross' ? styles.crossImg : styles.zeroImg;
 	};
@@ -24,8 +21,6 @@ export const AppLayout = ({ checkTheWinner, checkTheField, onReRender }) => {
 		store.dispatch(updateField(number));
 		checkTheWinner();
 		checkTheField();
-		setState(store.getState());
-		onReRender();
 	};
 
 	return (
@@ -50,6 +45,7 @@ export const AppLayout = ({ checkTheWinner, checkTheField, onReRender }) => {
 };
 
 AppLayout.propTypes = {
+	state: PropTypes.object,
 	checkTheWinner: PropTypes.func,
 	checkTheField: PropTypes.func,
 };

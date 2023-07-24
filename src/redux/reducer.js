@@ -1,3 +1,4 @@
+import { initialState } from '../utils';
 import { RESET_FIELD, SET_FULL, SET_WINNER, UPDATE_FIELD } from './types';
 
 export const reducer = (state, action) => {
@@ -16,7 +17,7 @@ export const reducer = (state, action) => {
 			return { ...state, field: newField, move: newMove };
 		case RESET_FIELD:
 			return {
-				...state,
+				...initialState,
 				field: [
 					{ number: 1, value: '' },
 					{ number: 2, value: '' },
@@ -28,8 +29,6 @@ export const reducer = (state, action) => {
 					{ number: 8, value: '' },
 					{ number: 9, value: '' },
 				],
-				winner: '',
-				full: false,
 			};
 		case SET_WINNER:
 			return { ...state, winner: payload };

@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import styles from './endOfGame.module.css';
 import PropTypes from 'prop-types';
 import { store } from './redux/store';
 import { resetField } from './redux/actions';
 
-export const EndOfGame = ({ onReRender }) => {
-	const [state, setState] = useState(store.getState());
+export const EndOfGame = () => {
+	const state = store.getState();
 
 	const chooseWinnerIcon = () => {
 		return state.winner !== ''
@@ -27,7 +26,6 @@ export const EndOfGame = ({ onReRender }) => {
 				className={styles.btn}
 				onClick={() => {
 					store.dispatch(resetField());
-					onReRender();
 				}}
 			>
 				Start new game
@@ -37,7 +35,6 @@ export const EndOfGame = ({ onReRender }) => {
 };
 
 EndOfGame.propTypes = {
-	winner: PropTypes.string,
 	setWinner: PropTypes.func,
 	setFull: PropTypes.func,
 };

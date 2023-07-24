@@ -3,55 +3,29 @@ import { AppLayout } from './appLayout';
 import { EndOfGame } from './endOfGame';
 import { store } from './redux/store';
 import { setFull, setWinner } from './redux/actions';
+import { checkWinner, isFull } from './utils';
 
 export const AppContainer = () => {
 	const [state, setState] = useState(store.getState());
-	const [reRender, setReRender] = useState(false);
 
 	useEffect(() => {
-		setState(store.getState());
-	}, [reRender]);
+		const unsubscribe = store.subscribe(() => {
+			setState(store.getState());
+		});
+
+		return () => unsubscribe();
+	}, []);
 
 	const checkTheField = () => {
-		if (!state.field.find((item) => item.value === '')) {
+		if (!isFull(state.field)) {
 			store.dispatch(setFull());
 		}
 	};
 
 	const checkTheWinner = () => {
-		if (
-			(state.field[0].value === state.field[1].value &&
-				state.field[1].value === state.field[2].value &&
-				state.field[0].value !== '') ||
-			(state.field[1].value === state.field[4].value &&
-				state.field[4].value === state.field[7].value &&
-				state.field[1].value !== '') ||
-			(state.field[2].value === state.field[5].value &&
-				state.field[5].value === state.field[8].value &&
-				state.field[2].value !== '') ||
-			(state.field[2].value === state.field[4].value &&
-				state.field[4].value === state.field[6].value &&
-				state.field[2].value !== '') ||
-			(state.field[6].value === state.field[7].value &&
-				state.field[7].value === state.field[8].value &&
-				state.field[6].value !== '') ||
-			(state.field[0].value === state.field[4].value &&
-				state.field[4].value === state.field[8].value &&
-				state.field[0].value !== '') ||
-			(state.field[0].value === state.field[3].value &&
-				state.field[3].value === state.field[6].value &&
-				state.field[0].value !== '') ||
-			(state.field[3].value === state.field[4].value &&
-				state.field[4].value === state.field[5].value &&
-				state.field[3].value !== '')
-		) {
+		if (checkWinner(state.field)) {
 			store.dispatch(setWinner(state.move));
-			setState(store.getState());
 		}
-	};
-
-	const handleReRender = () => {
-		setReRender((prev) => !prev);
 	};
 
 	return (
@@ -60,10 +34,10 @@ export const AppContainer = () => {
 				<AppLayout
 					checkTheWinner={checkTheWinner}
 					checkTheField={checkTheField}
-					onReRender={handleReRender}
+					state={state}
 				/>
 			) : (
-				<EndOfGame onReRender={handleReRender} />
+				<EndOfGame />
 			)}
 		</>
 	);
