@@ -1,11 +1,17 @@
-import styles from './appLayout.module.css';
 import PropTypes from 'prop-types';
-import { store } from './redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateField } from './redux/actions';
+import { selectField, selectMove } from './redux/selectors';
+import styles from './appLayout.module.css';
 
-export const AppLayout = ({ state, checkTheWinner, checkTheField }) => {
+export const AppLayout = ({ checkTheWinner, checkTheField }) => {
+	const field = useSelector(selectField);
+	const move = useSelector(selectMove);
+
+	const dispatch = useDispatch();
+
 	const chooseIcon = () => {
-		return state.move === 'cross' ? styles.crossImg : styles.zeroImg;
+		return move === 'cross' ? styles.crossImg : styles.zeroImg;
 	};
 
 	const chooseStyle = (item) => {
@@ -18,7 +24,7 @@ export const AppLayout = ({ state, checkTheWinner, checkTheField }) => {
 	};
 
 	const onClick = (number) => {
-		store.dispatch(updateField(number));
+		dispatch(updateField(number));
 		checkTheWinner();
 		checkTheField();
 	};
@@ -30,7 +36,7 @@ export const AppLayout = ({ state, checkTheWinner, checkTheField }) => {
 			</h1>
 
 			<div className={styles.table}>
-				{state.field.map((item) => {
+				{field.map((item) => {
 					return (
 						<div
 							className={`${styles.element} ${chooseStyle(item)}`}
@@ -45,7 +51,6 @@ export const AppLayout = ({ state, checkTheWinner, checkTheField }) => {
 };
 
 AppLayout.propTypes = {
-	state: PropTypes.object,
 	checkTheWinner: PropTypes.func,
 	checkTheField: PropTypes.func,
 };

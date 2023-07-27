@@ -3,4 +3,3 @@ import { reducer } from './reducer';
 import { initialState } from '../utils/initialState';
 
 export const store = createStore(reducer, initialState);
-store.dispatch({ type: 'INIT' });

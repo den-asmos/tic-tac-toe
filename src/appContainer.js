@@ -1,41 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppLayout } from './appLayout';
 import { EndOfGame } from './endOfGame';
-import { store } from './redux/store';
 import { setFull, setWinner } from './redux/actions';
 import { checkWinner, isFull } from './utils';
+import { selectField, selectFull, selectMove, selectWinner } from './redux/selectors';
 
 export const AppContainer = () => {
-	const [state, setState] = useState(store.getState());
+	const field = useSelector(selectField);
+	const move = useSelector(selectMove);
+	const winner = useSelector(selectWinner);
+	const full = useSelector(selectFull);
 
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setState(store.getState());
-		});
-
-		return () => unsubscribe();
-	}, []);
+	const dispatch = useDispatch();
 
 	const checkTheField = () => {
-		if (!isFull(state.field)) {
-			store.dispatch(setFull());
+		if (!isFull(field)) {
+			dispatch(setFull());
 		}
 	};
 
 	const checkTheWinner = () => {
-		if (checkWinner(state.field)) {
-			store.dispatch(setWinner(state.move));
+		if (checkWinner(field)) {
+			dispatch(setWinner(move));
 		}
 	};
 
 	return (
 		<>
-			{state.winner === '' && !state.full ? (
-				<AppLayout
-					checkTheWinner={checkTheWinner}
-					checkTheField={checkTheField}
-					state={state}
-				/>
+			{winner === '' && !full ? (
+				<AppLayout checkTheWinner={checkTheWinner} checkTheField={checkTheField} />
 			) : (
 				<EndOfGame />
 			)}
