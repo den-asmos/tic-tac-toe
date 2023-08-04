@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
+.cross {
+  @apply text-red-500;
+}
+
+.zero {
+  @apply text-blue-400;
+}
+
+.header {
+  @apply flex items-center justify-center gap-5 text-5xl mb-10;
+}
